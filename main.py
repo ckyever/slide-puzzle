@@ -1,7 +1,7 @@
-import slidePuzzle
+import slidepuzzle
 
 def main():
-    puzzle = slidePuzzle.Board(3)
+    puzzle = slidepuzzle.Board(3)
     puzzle.print()
     if puzzle.isSolved():
         print('This puzzle is solved')
