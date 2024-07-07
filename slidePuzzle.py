@@ -1,5 +1,5 @@
 import math
-import numpy
+import numpy as np
 
 class Board:
     def __init__(self, size):
@@ -15,10 +15,24 @@ class Board:
         return self.board
 
     def print(self):
-        print(numpy.matrix(self.board))
+        print(np.matrix(self.board))
+
+    def getNumberOfSquares(self):
+        return int(math.pow(self.size, 2))
 
     def isSquareBlank(self, index):
-        return math.pow(self.size, 2)
+        return self.getNumberOfSquares() == index
+
+    def isValid(self):
+        numbers = np.array(self.board).flatten()
+
+        # Handles sorting for None
+        sortedNumbers = sorted(numbers, key=lambda x: (x is None, x))
+
+        expectedNumbers = [number for number in range(1, self.getNumberOfSquares() + 1)]
+        expectedNumbers[-1] = None
+
+        return sortedNumbers == expectedNumbers
 
     def isSolved(self):
         expectedNumber = 1
