@@ -1,12 +1,13 @@
 import math
 import numpy as np
 
+# 0 represents the empty square
 class Board:
     def __init__(self, size):
         number = 0
         self.size = size
         self.board = [[number := number+1 for _ in range(size)] for _ in range(size)]
-        self.board[-1][-1] = None
+        self.board[-1][-1] = 0
 
     def getSize(self):
         return self.size
@@ -16,7 +17,6 @@ class Board:
 
     def print(self):
         prettyBoard = np.array(self.board)
-        prettyBoard[prettyBoard == None] = 0
         print() # Add new line
         print(prettyBoard)
 
@@ -32,11 +32,9 @@ class Board:
     def isValid(self):
         numbers = np.array(self.board).flatten()
 
-        # Handles sorting for None
-        sortedNumbers = sorted(numbers, key=lambda x: (x is None, x))
+        sortedNumbers = sorted(numbers)
 
-        expectedNumbers = [number for number in range(1, self.getNumberOfSquares() + 1)]
-        expectedNumbers[-1] = None
+        expectedNumbers = [number for number in range(0, self.getNumberOfSquares())]
 
         return sortedNumbers == expectedNumbers
 
@@ -48,7 +46,7 @@ class Board:
 
         for row in self.board:
             for number in row:
-                if number is None and self.isSquareBlank(expectedNumber):
+                if number == 0 and self.isSquareBlank(expectedNumber):
                     expectedNumber += 1
                 elif number == expectedNumber:
                     expectedNumber += 1

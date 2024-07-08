@@ -16,7 +16,7 @@ class Test3x3Board(unittest.TestCase):
         self.assertTrue(self.puzzle.isSolved())
 
     def test_unsolvedBoard(self):
-        self.puzzle.board[-1][-2] = None
+        self.puzzle.board[-1][-2] = 0
         self.puzzle.board[-1][-1] = 8
         self.assertFalse(self.puzzle.isSolved())
 
@@ -35,7 +35,7 @@ class Test4x4Board(unittest.TestCase):
         self.assertTrue(self.puzzle.isSolved())
 
     def test_unsolvedBoard(self):
-        self.puzzle.board[-1][-2] = None
+        self.puzzle.board[-1][-2] = 0
         self.puzzle.board[-1][-1] = 15
         self.assertFalse(self.puzzle.isSolved())
 
