@@ -23,6 +23,9 @@ class Board:
     def isSquareBlank(self, index):
         return self.getNumberOfSquares() == index
 
+    def isSquareValid(self, index):
+        return 1 <= index < self.getNumberOfSquares()
+
     def isValid(self):
         numbers = np.array(self.board).flatten()
 
@@ -49,3 +52,13 @@ class Board:
                 else:
                     return False
         return True
+
+    def move(self, square, direction):
+        """
+        1. Is square a valid number within the board e.g. 3x3 - between (inclusive) 1 and 8
+        2. Is the direction valid
+        3. Is the square chosen moveable - is it adjacent an empty square
+        4. Is the direction valid for the given square - it is moving it into an empty square
+        5. Make the move on the board!
+        """
+        pass
