@@ -24,8 +24,17 @@ class Test3x3CornerMoves(unittest.TestCase):
     def setUp(self):
         self.puzzle = slidepuzzle.Board(3)
 
+    def test_moveOptionUp(self):
+        self.puzzle.slideUp()
+        correctAfterState = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 0, 8]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
     def test_moveOptionRight(self):
-        self.puzzle.move(8)
+        self.puzzle.slideRight()
         correctAfterState = [
             [1, 2, 3],
             [4, 5, 6],
@@ -34,7 +43,7 @@ class Test3x3CornerMoves(unittest.TestCase):
         self.assertTrue(self.puzzle.board == correctAfterState)
 
     def test_moveOptionDown(self):
-        self.puzzle.move(6)
+        self.puzzle.slideDown()
         correctAfterState = [
             [1, 2, 3],
             [4, 5, 0],
@@ -51,17 +60,17 @@ class Test3x3CenterMoves(unittest.TestCase):
             [7, 8, 6]
         ]
 
-    def test_moveOptionDown(self):
-        self.puzzle.move(2)
+    def test_moveOptionUp(self):
+        self.puzzle.slideUp()
         correctAfterState = [
-            [1, 0, 3],
-            [4, 2, 5],
-            [7, 8, 6]
+            [1, 2, 3],
+            [4, 8, 5],
+            [7, 0, 6]
         ]
         self.assertTrue(self.puzzle.board == correctAfterState)
 
     def test_moveOptionRight(self):
-        self.puzzle.move(2)
+        self.puzzle.slideRight()
         correctAfterState = [
             [1, 2, 3],
             [0, 4, 5],
@@ -69,21 +78,21 @@ class Test3x3CenterMoves(unittest.TestCase):
         ]
         self.assertTrue(self.puzzle.board == correctAfterState)
 
-    def test_moveOptionLeft(self):
-        self.puzzle.move(2)
+    def test_moveOptionDown(self):
+        self.puzzle.slideDown()
         correctAfterState = [
-            [1, 2, 3],
-            [4, 5, 0],
+            [1, 0, 3],
+            [4, 2, 5],
             [7, 8, 6]
         ]
         self.assertTrue(self.puzzle.board == correctAfterState)
 
-    def test_moveOptionUp(self):
-        self.puzzle.move(2)
+    def test_moveOptionLeft(self):
+        self.puzzle.slideLeft()
         correctAfterState = [
             [1, 2, 3],
-            [4, 8, 5],
-            [7, 0, 6]
+            [4, 5, 0],
+            [7, 8, 6]
         ]
         self.assertTrue(self.puzzle.board == correctAfterState)
 

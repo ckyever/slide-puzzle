@@ -31,9 +31,7 @@ class Board:
 
     def isValid(self):
         numbers = np.array(self.board).flatten()
-
         sortedNumbers = sorted(numbers)
-
         expectedNumbers = [number for number in range(0, self.getNumberOfSquares())]
 
         return sortedNumbers == expectedNumbers
@@ -54,10 +52,14 @@ class Board:
                     return False
         return True
 
-    def move(self, square):
-        """
-        1. Is square a valid number within the board e.g. 3x3 - between (inclusive) 1 and 8
-        2. Is the square chosen moveable - is it adjacent an empty square
-        3. Make the move on the board!
-        """
+    def slideUp(self):
+        pass
+
+    def slideRight(self):
+        pass
+
+    def slideDown(self):
+        pass
+
+    def slideLeft(self):
         pass
