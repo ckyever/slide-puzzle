@@ -35,7 +35,11 @@ class Board:
         return sortedNumbers == expectedNumbers
 
     def isSolved(self):
+        if not self.isValid():
+            return False
+
         expectedNumber = 1
+
         for row in self.board:
             for number in row:
                 if number is None and self.isSquareBlank(expectedNumber):
