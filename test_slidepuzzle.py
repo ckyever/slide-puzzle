@@ -20,6 +20,73 @@ class Test3x3Board(unittest.TestCase):
         self.puzzle.board[-1][-1] = 8
         self.assertFalse(self.puzzle.isSolved())
 
+class Test3x3CornerMoves(unittest.TestCase):
+    def setUp(self):
+        self.puzzle = slidepuzzle.Board(3)
+
+    def test_moveOptionRight(self):
+        self.puzzle.move(8)
+        correctAfterState = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 0, 8]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
+    def test_moveOptionDown(self):
+        self.puzzle.move(6)
+        correctAfterState = [
+            [1, 2, 3],
+            [4, 5, 0],
+            [7, 8, 6]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
+class Test3x3CenterMoves(unittest.TestCase):
+    def setUp(self):
+        self.puzzle = slidepuzzle.Board(3)
+        self.puzzle.board = [
+            [1, 2, 3],
+            [4, 0, 5],
+            [7, 8, 6]
+        ]
+
+    def test_moveOptionDown(self):
+        self.puzzle.move(2)
+        correctAfterState = [
+            [1, 0, 3],
+            [4, 2, 5],
+            [7, 8, 6]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
+    def test_moveOptionRight(self):
+        self.puzzle.move(2)
+        correctAfterState = [
+            [1, 2, 3],
+            [0, 4, 5],
+            [7, 8, 6]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
+    def test_moveOptionLeft(self):
+        self.puzzle.move(2)
+        correctAfterState = [
+            [1, 2, 3],
+            [4, 5, 0],
+            [7, 8, 6]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
+    def test_moveOptionUp(self):
+        self.puzzle.move(2)
+        correctAfterState = [
+            [1, 2, 3],
+            [4, 8, 5],
+            [7, 0, 6]
+        ]
+        self.assertTrue(self.puzzle.board == correctAfterState)
+
 class Test4x4Board(unittest.TestCase):
     def setUp(self):
         self.puzzle = slidepuzzle.Board(4)
