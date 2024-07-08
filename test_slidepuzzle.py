@@ -25,13 +25,7 @@ class Test3x3CornerMoves(unittest.TestCase):
         self.puzzle = slidepuzzle.Board(3)
 
     def test_moveOptionUp(self):
-        self.puzzle.slideUp()
-        correctAfterState = [
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 0, 8]
-        ]
-        self.assertTrue(self.puzzle.board == correctAfterState)
+        self.assertFalse(self.puzzle.slideUp())
 
     def test_moveOptionRight(self):
         self.puzzle.slideRight()
@@ -50,6 +44,9 @@ class Test3x3CornerMoves(unittest.TestCase):
             [7, 8, 6]
         ]
         self.assertTrue(self.puzzle.board == correctAfterState)
+
+    def test_moveOptionLeft(self):
+        self.assertFalse(self.puzzle.slideLeft())
 
 class Test3x3CenterMoves(unittest.TestCase):
     def setUp(self):
