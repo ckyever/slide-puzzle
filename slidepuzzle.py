@@ -15,7 +15,7 @@ class Board:
         return self.board
 
     def print(self):
-        print(np.matrix(self.board))
+        print(np.array(self.board))
 
     def getNumberOfSquares(self):
         return int(math.pow(self.size, 2))
