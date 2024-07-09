@@ -56,6 +56,8 @@ class Test3x3CenterMoves(unittest.TestCase):
             [4, 0, 5],
             [7, 8, 6]
         ]
+        self.puzzle.emptySquareXindex = 1
+        self.puzzle.emptySquareYindex = 1
 
     def test_moveOptionUp(self):
         self.puzzle.slideUp()

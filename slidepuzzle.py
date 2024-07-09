@@ -8,6 +8,8 @@ class Board:
         self.size = size
         self.board = [[number := number+1 for _ in range(size)] for _ in range(size)]
         self.board[-1][-1] = 0
+        self.emptySquareXindex = size-1
+        self.emptySquareYindex = size-1
 
     def getSize(self):
         return self.size
@@ -55,11 +57,27 @@ class Board:
     def slideUp(self):
         pass
 
+    def canSlideUp(self):
+        # Can slide up if empty square is not on the last row
+        return self.emptySquareYindex < (self.size - 1)
+
     def slideRight(self):
         pass
+
+    def canSlideRight(self):
+        # Can slide right if empty square is not on the first column
+        return self.emptySquareXindex > 0
 
     def slideDown(self):
         pass
 
+    def canSlideDown(self):
+        # Can slide down if empty square is not on the first row
+        return self.emptySquareYindex > 0
+
     def slideLeft(self):
         pass
+
+    def canSlideLeft(self):
+        # Can slide left if empty square is not on the last column
+        return self.emptySquareYindex < (self.size - 1)
