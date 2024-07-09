@@ -19,9 +19,14 @@ class Board:
         return self.board
 
     def print(self):
-        prettyBoard = np.array(self.board)
-        print() # Add new line
-        print(prettyBoard)
+        boardString = ""
+        for row in self.board:
+            boardString += '['
+            for number in row:
+                boardString += f" {str(number)} "
+            boardString += "]\n"
+        print(boardString)
+
 
     def getNumberOfSquares(self):
         return int(math.pow(self.size, 2))
