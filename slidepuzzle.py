@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import random
 
 # 0 represents the empty square
 class Board:
@@ -55,7 +56,6 @@ class Board:
         return True
     
     def swapSquares(self, square1, square2):
-
         # Set where the new empty square is going to be located
         if square1 == (self.emptySquareXindex, self.emptySquareYindex):
             self.emptySquareXindex = square2[0]
@@ -128,4 +128,16 @@ class Board:
 
     def canSlideLeft(self):
         # Can slide left if empty square is not on the last column
-        return self.emptySquareYindex < (self.size - 1)
+        return self.emptySquareXindex < (self.size - 1)
+
+    def scramble(self, numberOfMoves):
+        for _ in range(numberOfMoves):
+            moveChoice = random.randint(1,4)
+            if moveChoice == 1:
+                self.slideUp()
+            elif moveChoice == 2:
+                self.slideRight()
+            elif moveChoice == 3:
+                self.slideDown()
+            elif moveChoice == 4:
+                self.slideLeft()
