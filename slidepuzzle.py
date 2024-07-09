@@ -55,6 +55,17 @@ class Board:
         return True
     
     def swapSquares(self, square1, square2):
+
+        # Set where the new empty square is going to be located
+        if square1 == (self.emptySquareXindex, self.emptySquareYindex):
+            self.emptySquareXindex = square2[0]
+            self.emptySquareYindex = square2[1]
+        elif square2 == (self.emptySquareXindex, self.emptySquareYindex):
+            self.emptySquareXindex = square1[0]
+            self.emptySquareYindex = square1[1]
+        else:
+            raise Exception("Should not be able to swap squares if one of them is not empty")
+
         temp = self.board[square1[1]][square1[0]]
         self.board[square1[1]][square1[0]] = self.board[square2[1]][square2[0]]
         self.board[square2[1]][square2[0]] = temp
@@ -75,21 +86,45 @@ class Board:
         return self.emptySquareYindex < (self.size - 1)
 
     def slideRight(self):
-        pass
+        if self.canSlideRight():
+            # Swap empty square with the square to the left of it
+            self.swapSquares(
+                (self.emptySquareXindex, self.emptySquareYindex),
+                (self.emptySquareXindex - 1, self.emptySquareYindex)
+            )
+            return True
+        else:
+            return False
 
     def canSlideRight(self):
         # Can slide right if empty square is not on the first column
         return self.emptySquareXindex > 0
 
     def slideDown(self):
-        pass
+        if self.canSlideDown():
+            # Swap empty square with the square above it
+            self.swapSquares(
+                (self.emptySquareXindex, self.emptySquareYindex),
+                (self.emptySquareXindex, self.emptySquareYindex - 1)
+            )
+            return True
+        else:
+            return False
 
     def canSlideDown(self):
         # Can slide down if empty square is not on the first row
         return self.emptySquareYindex > 0
 
     def slideLeft(self):
-        pass
+        if self.canSlideLeft():
+            # Swap empty square with the square to the right of it
+            self.swapSquares(
+                (self.emptySquareXindex, self.emptySquareYindex),
+                (self.emptySquareXindex + 1, self.emptySquareYindex)
+            )
+            return True
+        else:
+            return False
 
     def canSlideLeft(self):
         # Can slide left if empty square is not on the last column
