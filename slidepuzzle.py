@@ -53,9 +53,22 @@ class Board:
                 else:
                     return False
         return True
+    
+    def swapSquares(self, square1, square2):
+        temp = self.board[square1[1]][square1[0]]
+        self.board[square1[1]][square1[0]] = self.board[square2[1]][square2[0]]
+        self.board[square2[1]][square2[0]] = temp
 
     def slideUp(self):
-        pass
+        if self.canSlideUp():
+            # Swap empty square with the square below it
+            self.swapSquares(
+                (self.emptySquareXindex, self.emptySquareYindex), 
+                (self.emptySquareXindex, self.emptySquareYindex + 1)
+            )
+            return True
+        else:
+            return False
 
     def canSlideUp(self):
         # Can slide up if empty square is not on the last row
