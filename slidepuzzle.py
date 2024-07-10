@@ -27,7 +27,8 @@ class Board:
                     square = " "
                 else:
                     square = str(number)
-                boardString += square.center(4)
+                squareWidth = len(str(self.getNumberOfSquares())) + 1
+                boardString += square.center(squareWidth)
             boardString += "]\n"
         print(boardString)
 

@@ -1,9 +1,12 @@
 import slidepuzzle
+import keyboard
 
 def main():
-    puzzle = slidepuzzle.Board(4)
-    puzzle.print()
-    puzzle.scramble(100)
+
+    size = input("What size would you like the puzzle to be?\n")
+    print()
+
+    puzzle = slidepuzzle.Board(int(size))
     puzzle.print()
 
 if __name__ == "__main__":
