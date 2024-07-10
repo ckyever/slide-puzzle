@@ -23,7 +23,11 @@ class Board:
         for row in self.board:
             boardString += '['
             for number in row:
-                boardString += f" {str(number)} "
+                if number == 0:
+                    square = " "
+                else:
+                    square = str(number)
+                boardString += square.center(4)
             boardString += "]\n"
         print(boardString)
 
