@@ -27,7 +27,7 @@ class Board:
                     square = " "
                 else:
                     square = str(number)
-                squareWidth = len(str(self.getNumberOfSquares())) + 1
+                squareWidth = len(str(self.getNumberOfSquares())) + 2
                 boardString += square.center(squareWidth)
             boardString += "]\n"
         print(boardString)
@@ -140,7 +140,7 @@ class Board:
         # Can slide left if empty square is not on the last column
         return self.emptySquareXindex < (self.size - 1)
 
-    def scramble(self, numberOfMoves):
+    def scramble(self, numberOfMoves=100):
         for _ in range(numberOfMoves):
             moveChoice = random.randint(1,4)
             if moveChoice == 1:
