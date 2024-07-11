@@ -21,21 +21,28 @@ def main():
             print(f"It took you {seconds} seconds")
             break
 
-        key = getch.getch()
+        key = get_key()
         if key == 'q':
             break
-        elif key == 'w':
+        elif key == 'up':
             if puzzle.slideUp():
                 puzzle.print()
-        elif key == 'd':
+        elif key == 'right':
             if puzzle.slideRight():
                 puzzle.print()
-        elif key == 's':
+        elif key == 'down':
             if puzzle.slideDown():
                 puzzle.print()
-        elif key == 'a':
+        elif key == 'left':
             if puzzle.slideLeft():
                 puzzle.print()
+
+def get_key():
+    first_char = getch.getch()
+    if first_char == '\x1b':
+        return {'[A': 'up', '[B': 'down', '[C': 'right', '[D': 'left'}[getch.getch() + getch.getch()]
+    else:
+        return first_char
 
 if __name__ == "__main__":
     main()
