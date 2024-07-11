@@ -1,15 +1,15 @@
 import getch
+import os
 import slidepuzzle
 import time
 
 def main():
 
     size = input("What size would you like the puzzle to be?\n")
-    print()
 
     puzzle = slidepuzzle.Board(int(size))
     puzzle.scramble()
-    puzzle.print()
+    updateBoard(puzzle)
 
     startTime = time.time()
 
@@ -26,16 +26,16 @@ def main():
             break
         elif key == 'up':
             if puzzle.slideUp():
-                puzzle.print()
+                updateBoard(puzzle)
         elif key == 'right':
             if puzzle.slideRight():
-                puzzle.print()
+                updateBoard(puzzle)
         elif key == 'down':
             if puzzle.slideDown():
-                puzzle.print()
+                updateBoard(puzzle)
         elif key == 'left':
             if puzzle.slideLeft():
-                puzzle.print()
+                updateBoard(puzzle)
 
 def get_key():
     first_char = getch.getch()
@@ -43,6 +43,10 @@ def get_key():
         return {'[A': 'up', '[B': 'down', '[C': 'right', '[D': 'left'}[getch.getch() + getch.getch()]
     else:
         return first_char
+
+def updateBoard(puzzle):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    puzzle.print()
 
 if __name__ == "__main__":
     main()
