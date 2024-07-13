@@ -1,3 +1,4 @@
+import slidepuzzle
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -6,9 +7,10 @@ cors = CORS(app, origins='*')
 
 @app.route("/api/puzzle", methods=['GET'])
 def puzzle():
+    puzzle = slidepuzzle.Board(4)
     return jsonify(
         {
-            "puzzle": "test"
+            "puzzle": puzzle.getBoard()
         }
     )
 
