@@ -1,8 +1,7 @@
 import { useState, useEffect} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios'
+import Puzzle from './components/Puzzle'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,18 +18,7 @@ function App() {
 
   return (
     <>
-      <div>
-        <p>
-          {puzzle.map((row, rowIndex) => (
-            <div key={rowIndex}>
-              {row.map((tile, tileIndex) => (
-                <span>[{tile}]</span>
-              ))}
-              <br></br>
-            </div>
-          ))}
-        </p>
-      </div>
+      <Puzzle board={puzzle} />;
     </>
   )
 }

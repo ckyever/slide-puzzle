@@ -1,12 +1,17 @@
 import './Puzzle.css'
 
-function Puzzle() {
+function Puzzle(props) {
 
   return (
     <>
-      <div>
-        CKYTODO: Puzzle
-      </div>
+      {props.board.map((row, rowIndex) => (
+        <div key={rowIndex}>
+          {row.map((tile, tileIndex) => (
+            <span key={tileIndex}>[{tile}]</span>
+          ))}
+          <br></br>
+        </div>
+      ))}
     </>
   )
 }
