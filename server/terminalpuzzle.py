@@ -4,7 +4,6 @@ import slidepuzzle
 import time
 
 def main():
-
     size = input("What size would you like the puzzle to be?\n")
 
     puzzle = slidepuzzle.Board(int(size))
