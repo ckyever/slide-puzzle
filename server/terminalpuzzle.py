@@ -45,7 +45,7 @@ def get_key():
 
 def updateBoard(puzzle):
     os.system('cls' if os.name == 'nt' else 'clear')
-    puzzle.print()
+    puzzle.printCurrentBoard()
 
 if __name__ == "__main__":
     main()

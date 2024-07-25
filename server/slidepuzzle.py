@@ -1,3 +1,4 @@
+import copy
 import math
 import numpy as np
 import random
@@ -9,6 +10,7 @@ class Board:
         self.size = size
         self.board = [[number := number+1 for _ in range(size)] for _ in range(size)]
         self.board[-1][-1] = 0
+        self.initialBoard = copy.deepcopy(self.board)
         self.emptySquareXindex = size-1
         self.emptySquareYindex = size-1
 
@@ -18,9 +20,9 @@ class Board:
     def getBoard(self):
         return self.board
 
-    def print(self):
+    def printBoard(self, board):
         boardString = ""
-        for row in self.board:
+        for row in board:
             boardString += '['
             for number in row:
                 if number == 0:
@@ -32,6 +34,11 @@ class Board:
             boardString += "]\n"
         print(boardString)
 
+    def printCurrentBoard(self):
+        self.printBoard(self.board)
+
+    def printInitialBoard(self):
+        self.printBoard(self.initialBoard)
 
     def getNumberOfSquares(self):
         return int(math.pow(self.size, 2))
@@ -151,3 +158,4 @@ class Board:
                 self.slideDown()
             elif moveChoice == 4:
                 self.slideLeft()
+        self.initialBoard = copy.deepcopy(self.board)
