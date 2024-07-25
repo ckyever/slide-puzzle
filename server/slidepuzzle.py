@@ -147,8 +147,11 @@ class Board:
         # Can slide left if empty square is not on the last column
         return self.emptySquareXindex < (self.size - 1)
 
-    def scramble(self, numberOfMoves=100):
-        for _ in range(numberOfMoves):
+    def scramble(self, minimumNumberOfMoves=100):
+        movesRemaining = minimumNumberOfMoves
+        movesMade = 0
+
+        while (movesRemaining > 0):
             moveChoice = random.randint(1,4)
             if moveChoice == 1:
                 self.slideUp()
@@ -158,4 +161,11 @@ class Board:
                 self.slideDown()
             elif moveChoice == 4:
                 self.slideLeft()
+
+            movesMade += 1
+            movesRemaining -= 1
+
+            if (movesRemaining == 0 and self.isSolved()):
+                movesRemaining = 100
+
         self.initialBoard = copy.deepcopy(self.board)
