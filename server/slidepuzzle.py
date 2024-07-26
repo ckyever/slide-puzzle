@@ -1,7 +1,9 @@
 import copy
 import math
 import numpy as np
+import os
 import random
+import time
 
 # 0 represents the empty square
 class Board:
@@ -25,6 +27,22 @@ class Board:
 
     def getBoard(self):
         return self.board
+
+    def getMoveHistory(self):
+        return self.moveHistory
+
+    def getNumberOfMoves(self):
+        return len(self.moveHistory)
+
+    def resetBoard(self):
+        self.board = copy.deepcopy(self.initialBoard)
+        self.moveHistory = []
+
+        for row in range(self.size):
+            for column in range(self.size):
+                if self.board[row][column] == 0:
+                    self.emptySquareYindex = row
+                    self.emptySquareXindex = column
 
     def printBoard(self, board):
         boardString = ""
@@ -184,5 +202,25 @@ class Board:
 
         self.initialBoard = copy.deepcopy(self.board)
 
-    def getNumberOfMoves(self):
-        return len(self.moveHistory)
+    def makeMoves(self, moveList, printBoard=True, secondsBetweenMoves=0.5):
+        for move in moveList:
+            if (move == self.SLIDE_UP):
+                self.slideUp()
+            elif (move == self.SLIDE_RIGHT):
+                self.slideRight()
+            elif (move == self.SLIDE_DOWN):
+                self.slideDown()
+            elif (move == self.SLIDE_LEFT):
+                self.slideLeft()
+            else:
+                raise Exception(f"Invalid move: {move}")
+
+            if printBoard:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                self.printCurrentBoard()
+                time.sleep(secondsBetweenMoves)
+    
+    def replayMoves(self):
+        moveList = self.getMoveHistory()
+        self.resetBoard()
+        self.makeMoves(moveList)

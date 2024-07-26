@@ -36,6 +36,13 @@ def main():
             if puzzle.slideLeft():
                 updateBoard(puzzle)
 
+    
+    showReplay = input("\nDo you want to replay your solve?\n")
+
+    if showReplay.casefold() == "yes".casefold() or showReplay.casefold() == "y".casefold():
+        puzzle.replayMoves()
+        print("Done")
+
 def get_key():
     first_char = getch.getch()
     if first_char == '\x1b':
