@@ -17,7 +17,7 @@ def main():
             endTime = time.time()
             seconds = round(endTime-startTime, 2)
             print("You solved it!")
-            print(f"It took you {seconds} seconds")
+            print(f"It took you {seconds} seconds and {puzzle.getNumberOfMoves()} moves")
             break
 
         key = get_key()

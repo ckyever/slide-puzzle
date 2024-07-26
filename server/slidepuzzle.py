@@ -5,6 +5,11 @@ import random
 
 # 0 represents the empty square
 class Board:
+    SLIDE_UP = "u"
+    SLIDE_RIGHT = "r"
+    SLIDE_DOWN = "d"
+    SLIDE_LEFT = "l"
+
     def __init__(self, size):
         number = 0
         self.size = size
@@ -13,6 +18,7 @@ class Board:
         self.initialBoard = copy.deepcopy(self.board)
         self.emptySquareXindex = size-1
         self.emptySquareYindex = size-1
+        self.moveHistory = []
 
     def getSize(self):
         return self.size
@@ -87,13 +93,15 @@ class Board:
         self.board[square1[1]][square1[0]] = self.board[square2[1]][square2[0]]
         self.board[square2[1]][square2[0]] = temp
 
-    def slideUp(self):
+    def slideUp(self, trackMove=True):
         if self.canSlideUp():
             # Swap empty square with the square below it
             self.swapSquares(
                 (self.emptySquareXindex, self.emptySquareYindex), 
                 (self.emptySquareXindex, self.emptySquareYindex + 1)
             )
+            if trackMove:
+                self.moveHistory.append(self.SLIDE_UP)
             return True
         else:
             return False
@@ -102,13 +110,15 @@ class Board:
         # Can slide up if empty square is not on the last row
         return self.emptySquareYindex < (self.size - 1)
 
-    def slideRight(self):
+    def slideRight(self, trackMove=True):
         if self.canSlideRight():
             # Swap empty square with the square to the left of it
             self.swapSquares(
                 (self.emptySquareXindex, self.emptySquareYindex),
                 (self.emptySquareXindex - 1, self.emptySquareYindex)
             )
+            if trackMove:
+                self.moveHistory.append(self.SLIDE_RIGHT)
             return True
         else:
             return False
@@ -117,13 +127,15 @@ class Board:
         # Can slide right if empty square is not on the first column
         return self.emptySquareXindex > 0
 
-    def slideDown(self):
+    def slideDown(self, trackMove=True):
         if self.canSlideDown():
             # Swap empty square with the square above it
             self.swapSquares(
                 (self.emptySquareXindex, self.emptySquareYindex),
                 (self.emptySquareXindex, self.emptySquareYindex - 1)
             )
+            if trackMove:
+                self.moveHistory.append(self.SLIDE_DOWN)
             return True
         else:
             return False
@@ -132,13 +144,15 @@ class Board:
         # Can slide down if empty square is not on the first row
         return self.emptySquareYindex > 0
 
-    def slideLeft(self):
+    def slideLeft(self, trackMove=True):
         if self.canSlideLeft():
             # Swap empty square with the square to the right of it
             self.swapSquares(
                 (self.emptySquareXindex, self.emptySquareYindex),
                 (self.emptySquareXindex + 1, self.emptySquareYindex)
             )
+            if trackMove:
+                self.moveHistory.append(self.SLIDE_LEFT)
             return True
         else:
             return False
@@ -154,13 +168,13 @@ class Board:
         while (movesRemaining > 0):
             moveChoice = random.randint(1,4)
             if moveChoice == 1:
-                self.slideUp()
+                self.slideUp(False)
             elif moveChoice == 2:
-                self.slideRight()
+                self.slideRight(False)
             elif moveChoice == 3:
-                self.slideDown()
+                self.slideDown(False)
             elif moveChoice == 4:
-                self.slideLeft()
+                self.slideLeft(False)
 
             movesMade += 1
             movesRemaining -= 1
@@ -169,3 +183,6 @@ class Board:
                 movesRemaining = 100
 
         self.initialBoard = copy.deepcopy(self.board)
+
+    def getNumberOfMoves(self):
+        return len(self.moveHistory)
