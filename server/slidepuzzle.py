@@ -61,6 +61,10 @@ class Board:
     def printCurrentBoard(self):
         self.printBoard(self.board)
 
+    def clearThenPrintCurrentBoard(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        self.printCurrentBoard()
+
     def printInitialBoard(self):
         self.printBoard(self.initialBoard)
 
@@ -216,11 +220,26 @@ class Board:
                 raise Exception(f"Invalid move: {move}")
 
             if printBoard:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                self.printCurrentBoard()
+                self.clearThenPrintCurrentBoard()
                 time.sleep(secondsBetweenMoves)
     
     def replayMoves(self):
         moveList = self.getMoveHistory()
         self.resetBoard()
         self.makeMoves(moveList)
+
+    def solve(self, secondsBetweenMoves=0.25):
+        moveOptions = [self.SLIDE_UP, self.SLIDE_RIGHT, self.SLIDE_DOWN, self.SLIDE_LEFT]
+        while not self.isSolved():
+            move = random.choice(moveOptions)
+            if move == self.SLIDE_UP:
+                self.slideUp()
+            elif move == self.SLIDE_RIGHT:
+                self.slideRight()
+            elif move == self.SLIDE_DOWN:
+                self.slideDown()
+            elif move == self.SLIDE_LEFT:
+                self.slideLeft()
+
+            self.clearThenPrintCurrentBoard()
+            time.sleep(secondsBetweenMoves)
