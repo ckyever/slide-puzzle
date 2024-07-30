@@ -7,10 +7,10 @@ import time
 
 # 0 represents the empty square
 class Board:
-    SLIDE_UP = "u"
+    SLIDE_UP    = "u"
     SLIDE_RIGHT = "r"
-    SLIDE_DOWN = "d"
-    SLIDE_LEFT = "l"
+    SLIDE_DOWN  = "d"
+    SLIDE_LEFT  = "l"
 
     def __init__(self, size):
         number = 0
