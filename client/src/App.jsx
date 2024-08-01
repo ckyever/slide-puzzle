@@ -18,7 +18,7 @@ function App() {
 
   return (
     <>
-      <Puzzle board={puzzle} />;
+      <Puzzle board={puzzle}/>
     </>
   )
 }

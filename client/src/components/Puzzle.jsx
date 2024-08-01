@@ -1,6 +1,6 @@
 import './Puzzle.css'
 
-function Puzzle(props) {
+const Puzzle = (props) => {
 
   return (
     <>
