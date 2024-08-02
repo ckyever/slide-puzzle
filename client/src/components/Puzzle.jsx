@@ -1,4 +1,5 @@
-import './Puzzle.css'
+import PropTypes from 'prop-types';
+import './Puzzle.css';
 
 const Puzzle = (props) => {
 
@@ -14,6 +15,8 @@ const Puzzle = (props) => {
       ))}
     </>
   )
-}
+};
 
-export default Puzzle
+Puzzle.prototype = {board: PropTypes.array.isRequired};
+
+export default Puzzle;

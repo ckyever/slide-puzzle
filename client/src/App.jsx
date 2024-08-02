@@ -1,7 +1,7 @@
-import { useState, useEffect} from 'react'
-import './App.css'
-import axios from 'axios'
-import Puzzle from './components/Puzzle'
+import { useState, useEffect} from 'react';
+import './App.css';
+import axios from 'axios';
+import Puzzle from './components/Puzzle';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +21,6 @@ function App() {
       <Puzzle board={puzzle}/>
     </>
   )
-}
+};
 
-export default App
+export default App;
