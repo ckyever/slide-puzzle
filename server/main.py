@@ -10,7 +10,8 @@ def puzzle():
     puzzle = slidepuzzle.Board(4)
     return jsonify(
         {
-            "puzzle": puzzle.getBoard()
+            "puzzle": puzzle.getBoard(),
+            "size": puzzle.getSize()
         }
     )
 
