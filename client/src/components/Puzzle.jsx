@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import './Puzzle.css';
 
-const Puzzle = (props) => {
+const Puzzle = props => {
 
   return (
     <>

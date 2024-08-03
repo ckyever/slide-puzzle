@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Puzzle from './components/Puzzle';
 
-function App() {
+const App = () => {
   const [count, setCount] = useState(0);
   const [puzzle, setArray] = useState([]);
 
