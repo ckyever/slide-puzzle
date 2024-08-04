@@ -11,6 +11,10 @@ const App = () => {
     const response = await axios.get("http://localhost:8080/api/puzzle")
     setArray(response.data.puzzle)
     setNumber(response.data.size)
+    const data = {
+      move: 'up'
+    }
+    const result = await axios.post("http://localhost:8080/api/puzzle", data)
   };
 
   useEffect(() => {
