@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import './Puzzle.css';
+import Tile from '../tile/Tile';
 
 const Puzzle = props => {
   return (
@@ -8,8 +9,8 @@ const Puzzle = props => {
       style={{gridTemplateColumns: `repeat(${props.size}, 1fr)`}}
     >
         {props.board.map((row) => (
-            row.map((tile, tileIndex) => (
-              <div key={tileIndex} className='tile'>{tile}</div>
+            row.map((tileNumber, tileIndex) => (
+              <Tile key={tileIndex} tileNumber={tileNumber} />
             ))
         ))}
     </div>

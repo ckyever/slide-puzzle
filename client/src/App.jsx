@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
-import Puzzle from './components/Puzzle';
+import Puzzle from './components/puzzle/Puzzle';
 
 const App = () => {
   const [puzzle, setArray] = useState([]);
