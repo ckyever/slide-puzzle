@@ -7,18 +7,47 @@ const App = () => {
   const [puzzle, setArray] = useState([]);
   const [size, setNumber] = useState(0);
 
-  const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:8080/api/puzzle")
-    setArray(response.data.puzzle)
-    setNumber(response.data.size)
-    const data = {
-      move: 'up'
-    }
-    const result = await axios.post("http://localhost:8080/api/puzzle", data)
+  const fetchPuzzle = async () => {
+    const response = await axios.get("http://localhost:8080/api/puzzle");
+    setArray(response.data.puzzle);
+    setNumber(response.data.size);
   };
 
+  // Initial fetch of board  
   useEffect(() => {
-    fetchAPI()
+    fetchPuzzle();
+  }, []);
+
+  const handleKeyDown = async (event) => {
+    let direction = '';
+    switch (event.key) {
+      case 'ArrowUp':
+        direction = 'u';
+        break;
+      case 'ArrowRight':
+        direction = 'r';
+        break;
+      case 'ArrowDown':
+        direction = 'd';
+        break;
+      case 'ArrowLeft':
+        direction = 'l';
+        break;
+      default:
+        return;
+    }
+
+    const data = {move: direction};
+    const result = await axios.post("http://localhost:8080/api/puzzle", data);
+    fetchPuzzle();
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
   }, []);
 
   return (

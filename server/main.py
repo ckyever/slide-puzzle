@@ -5,9 +5,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 cors = CORS(app, origins='*')
 
+puzzle = slidepuzzle.Board(4)
+
 @app.route("/api/puzzle", methods=['GET'])
 def sendPuzzle():
-    puzzle = slidepuzzle.Board(4)
     return jsonify(
         {
             "puzzle": puzzle.getBoard(),
@@ -18,7 +19,17 @@ def sendPuzzle():
 @app.route("/api/puzzle", methods=['POST'])
 def receivePuzzle():
     data = request.json
-    print("This is Flask we received = ", data)
+    move = data["move"]
+
+    if move == puzzle.SLIDE_UP:
+        puzzle.slideUp()
+    elif move == puzzle.SLIDE_RIGHT:
+        puzzle.slideRight()
+    elif move == puzzle.SLIDE_DOWN:
+        puzzle.slideDown()
+    elif move == puzzle.SLIDE_LEFT:
+        puzzle.slideLeft()
+
     return jsonify(
         {
             "message": "Data received successfully",
