@@ -6,13 +6,16 @@ app = Flask(__name__)
 cors = CORS(app, origins='*')
 
 puzzle = slidepuzzle.Board(4)
+puzzle.scramble()
 
 @app.route("/api/puzzle", methods=['GET'])
 def sendPuzzle():
+
     return jsonify(
         {
             "puzzle": puzzle.getBoard(),
-            "size": puzzle.getSize()
+            "size": puzzle.getSize(),
+            "solved": puzzle.isSolved()
         }
     )
 
