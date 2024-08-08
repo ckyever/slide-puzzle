@@ -20,6 +20,10 @@
   margin-top: 4rem;
 }
 
+.new-game {
+  visibility: hidden;
+}
+
 .show {
   visibility: visible;
 }

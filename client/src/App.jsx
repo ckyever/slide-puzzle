@@ -3,6 +3,9 @@ import './App.css';
 import axios from 'axios';
 import Puzzle from './components/puzzle/Puzzle';
 
+// CKYTODO: Check network usage there are too many post and get requests figure out why
+// CKYTODO: Check errors in browser dev tools console
+
 const App = () => {
   const [puzzle, setArray] = useState([]);
   const [size, setNumber] = useState(0);
@@ -52,10 +55,25 @@ const App = () => {
     }
   }, []);
 
+  const handleNewGame = async () => {
+    const result = await axios.post("http://localhost:8080/api/puzzle/new", {});
+    fetchPuzzle();
+  };
+
+  useEffect(() => {
+    const newGameButton = document.getElementById("new-game");
+    newGameButton.addEventListener("click", handleNewGame);
+
+    return () => {
+      newGameButton.removeEventListener("click", newGameButton);
+    }
+  });
+
   return (
     <div className="container">
       <Puzzle board={puzzle} size={size}/>
       <div className={`result ${solved ? 'show' : ''}`}>You solved it!</div>
+      <button id="new-game" className={`new-game ${solved ? 'show' : ''}`}>New Game</button>
     </div>
   )
 };

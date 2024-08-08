@@ -8,6 +8,16 @@ cors = CORS(app, origins='*')
 puzzle = slidepuzzle.Board(4)
 puzzle.scramble()
 
+@app.route("/api/puzzle/new", methods=['POST'])
+def newPuzzle():
+    puzzle.scramble()
+
+    return jsonify(
+        {
+            "message": "Puzzle was scrambled"
+        }
+    ), 200
+
 @app.route("/api/puzzle", methods=['GET'])
 def sendPuzzle():
 
