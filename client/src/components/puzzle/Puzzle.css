@@ -1,4 +1,5 @@
 .board {
     display: grid;    
-    margin: 12rem;
+    width: 25vw;
+    height: 25vw;
 }

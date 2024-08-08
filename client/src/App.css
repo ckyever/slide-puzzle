@@ -3,12 +3,21 @@
   color: white;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 .result {
   visibility: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 6rem;
+  font-size: 4rem;
+  margin-top: 4rem;
 }
 
 .show {

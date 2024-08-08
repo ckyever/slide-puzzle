@@ -53,10 +53,10 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <Puzzle board={puzzle} size={size}/>
       <div className={`result ${solved ? 'show' : ''}`}>You solved it!</div>
-    </>
+    </div>
   )
 };
 
