@@ -3,8 +3,9 @@ import './App.css';
 import axios from 'axios';
 import Puzzle from './components/puzzle/Puzzle';
 
-// CKYTODO: Check network usage there are too many post and get requests figure out why
-// CKYTODO: Check errors in browser dev tools console
+// CKYTODO: Change this so user interaction with puzzle occurs on the client side
+// CKYTODO: All the python flask server should be going is receiving puzzle states
+// CKYTODO: and returning a list of moves that would solve that puzzle state
 
 const App = () => {
   const [puzzle, setArray] = useState([]);
