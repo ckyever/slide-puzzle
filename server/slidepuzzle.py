@@ -5,17 +5,17 @@ import os
 import random
 import time
 
-# 0 represents the empty square
 class Board:
-    SLIDE_UP    = "u"
-    SLIDE_RIGHT = "r"
-    SLIDE_DOWN  = "d"
-    SLIDE_LEFT  = "l"
+    SLIDE_UP    = "U"
+    SLIDE_RIGHT = "R"
+    SLIDE_DOWN  = "D"
+    SLIDE_LEFT  = "L"
 
     def __init__(self, size):
         number = 0
         self.size = size
         self.board = [[number := number+1 for _ in range(size)] for _ in range(size)]
+        # 0 represents the empty square
         self.board[-1][-1] = 0
         self.initialBoard = copy.deepcopy(self.board)
         self.emptySquareXindex = size-1
