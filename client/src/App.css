@@ -1,29 +1,19 @@
 :root {
-  background-color: black;
-  color: white;
+  --size: 100px;
+  --tile: #342956;
+  --correct: #6e50b4;
 }
 
-.container {
+html, body {
+  background: #242424;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   height: 100vh;
-}
-
-.result {
-  visibility: hidden;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 4rem;
-  margin-top: 4rem;
-}
-
-.new-game {
-  visibility: hidden;
-}
-
-.show {
-  visibility: visible;
+  font-family: sans-serif;
 }
