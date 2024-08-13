@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import './App.css';
+import Board from './components/Board/Board';
 import axios from 'axios';
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <Board />
     </div>
   )
 };
