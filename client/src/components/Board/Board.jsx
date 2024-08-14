@@ -1,4 +1,5 @@
 import Overlay from '../Overlay/Overlay';
+import './Board.css'
 
 const Board = () => {
     return <div className="game">
