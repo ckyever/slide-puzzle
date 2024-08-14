@@ -1,6 +1,6 @@
 import { useState, useEffect} from 'react';
 import './App.css';
-import Board from './components/Board/Board';
+import Board from './components/board/Board';
 import axios from 'axios';
 
 const App = () => {
