@@ -6,10 +6,12 @@ import NewGame from '../new-game/NewGame';
 import './Board.css';
 
 const Board = () => {
+    const boardSize = 4; // Number of columns/rows
+    const numberOfTiles = 16; 
 
     // CKYTODO: Fix the below function as it can sometimes give a unsolvable puzzle state (search web for correct way to shuffle)
     const shuffle = () => 
-        new Array(16)
+        new Array(numberOfTiles)
             .fill()
             .map((_, i) => i + 1)
             .sort(() => Math.random() - 0.5)
@@ -18,31 +20,30 @@ const Board = () => {
     const [numbers, setNumbers] = useState(shuffle());
 
     const moveTile = tile => {
-        const blankTileIndex = numbers.find(n => n.value === 16).index;
+        const emptySpaceIndex = numbers.find(n => n.value === numberOfTiles).index;
 
-        // CKYTODO: This is fixed but refactor this in a more explicit way
-        const validMoveTilesIndex = [blankTileIndex-4, blankTileIndex+4]
+        const emptySpaceRow = Math.floor(emptySpaceIndex / boardSize);
+        const emptySpaceColumn = emptySpaceIndex % boardSize;
 
-        // Only allow movement of the adjacent tiles if they are not on the next row
-        if ((blankTileIndex) % 4 != 0) {
-            validMoveTilesIndex.push(blankTileIndex-1)
-        }
-        if ((blankTileIndex+1) % 4 != 0) {
-            validMoveTilesIndex.push(blankTileIndex+1)
-        }
+        const tileRow = Math.floor(tile.index / boardSize);
+        const tileColumn = tile.index % boardSize;
 
-        if (!validMoveTilesIndex.includes(tile.index)) {
-            return
+        const isTileAdjacentToEmptySpace =
+            ((tileRow == emptySpaceRow && Math.abs(tileColumn - emptySpaceColumn) === 1) || // Same row adjacent column
+            (tileColumn == emptySpaceColumn && Math.abs(tileRow - emptySpaceRow) === 1));   // Same column adjacent row
+
+        if (!isTileAdjacentToEmptySpace) {
+            return;
         }
 
         const newNumbers = [...numbers].map(number => {
-            if (number.index !== blankTileIndex && number.index !== tile.index) {
+            if (number.index !== emptySpaceIndex && number.index !== tile.index) {
                 return number
-            } else if (number.value === 16) {
-                return {value: 16, index:tile.index}
+            } else if (number.value === numberOfTiles) {
+                return {value: numberOfTiles, index:tile.index}
             }
 
-            return {value: tile.value, index:blankTileIndex}
+            return {value: tile.value, index:emptySpaceIndex}
         });
 
         setNumbers(newNumbers);
