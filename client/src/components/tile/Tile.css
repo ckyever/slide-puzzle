@@ -12,6 +12,7 @@
     cursor: pointer;
     transition: left .4s, top .4s;
     user-select: none;
+    border: 0.1rem solid #ffffff;
 }
 
 .number.slot--0{left: 0px; top: 0;}
@@ -30,4 +31,8 @@
 .number.slot--13{left: calc(var(--size)); top: calc(3 * var(--size));}
 .number.slot--14{left: calc(2 * var(--size) ); top: calc(3 * var(--size));}
 .number.slot--15{left: calc(3 * var(--size)); top: calc(3 * var(--size));}
-.number.disabled{pointer-events: none; background-color:transparent;}
+.number.empty-space{
+    pointer-events: none;
+    background-color:transparent;
+    border: none;
+}
