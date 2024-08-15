@@ -17,19 +17,32 @@ const Board = () => {
 
     const [numbers, setNumbers] = useState(shuffle());
 
-    // CKYTODO: Fix scenario where if the blank tile is on the right clicking the left-most tile on the next row will move it illegaly
     const moveTile = tile => {
-        const i16 = numbers.find(n => n.value === 16).index;
-        if (![i16-1, i16+1, i16-4, i16+4].includes(tile.index))
+        const blankTileIndex = numbers.find(n => n.value === 16).index;
+
+        // CKYTODO: This is fixed but refactor this in a more explicit way
+        const validMoveTilesIndex = [blankTileIndex-4, blankTileIndex+4]
+
+        // Only allow movement of the adjacent tiles if they are not on the next row
+        if ((blankTileIndex) % 4 != 0) {
+            validMoveTilesIndex.push(blankTileIndex-1)
+        }
+        if ((blankTileIndex+1) % 4 != 0) {
+            validMoveTilesIndex.push(blankTileIndex+1)
+        }
+
+        if (!validMoveTilesIndex.includes(tile.index)) {
             return
+        }
 
         const newNumbers = [...numbers].map(number => {
-            if (number.index !== i16 && number.index !== tile.index)
+            if (number.index !== blankTileIndex && number.index !== tile.index) {
                 return number
-            else if (number.value === 16)
+            } else if (number.value === 16) {
                 return {value: 16, index:tile.index}
+            }
 
-            return {value: tile.value, index:i16}
+            return {value: tile.value, index:blankTileIndex}
         });
 
         setNumbers(newNumbers);
