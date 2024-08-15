@@ -58,9 +58,9 @@ const Board = () => {
 
     return <div className="game">
         <div className="board">
-            <Overlay />
+            <Overlay numberOfTiles={numberOfTiles} />
             {numbers.map((x, i) =>
-                <Tile key={i} number={x} moveTile={moveTile}/>
+                <Tile key={i} number={x} moveTile={moveTile} numberOfTiles={numberOfTiles}/>
             )}
         </div>
         <Winner numbers={numbers} reset={reset}/>
