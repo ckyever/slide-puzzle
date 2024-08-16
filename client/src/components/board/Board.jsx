@@ -7,15 +7,38 @@ import './Board.css';
 
 const Board = () => {
     const boardSize = 4; // Number of columns/rows
-    const numberOfTiles = 16; 
+    const numberOfTiles = boardSize*boardSize; 
 
-    // CKYTODO: Fix the below function as it can sometimes give a unsolvable puzzle state (search web for correct way to shuffle)
-    const shuffle = () => 
-        new Array(numberOfTiles)
+    const shuffle = () => {
+        let puzzle = Array(numberOfTiles)
             .fill()
             .map((_, i) => i + 1)
             .sort(() => Math.random() - 0.5)
             .map((x, i) => ({value: x, index: i}));
+
+        // If puzzle is not solvable we can assume (parity of permutations + taxicab distance of empty tile)
+        // is odd. So if we make one more swap this should bring the total to even
+        if (!isSolvable(puzzle)) {
+            const index1 = puzzle.indexOf(1);
+            const index2 = puzzle.indexOf(2);
+            [puzzle[index1], puzzle[index2]] = [puzzle[index2], puzzle[index1]];
+        }
+
+        return puzzle;
+    };
+
+    const isSolvable = (puzzle) => {
+        let inversions = 0;
+        puzzle.forEach((value, i) => {
+            for (let j = i + 1; j < numberOfTiles; j++) {
+                if (value > puzzle[j] && value !== 0 && puzzle[j] !== 0) {
+                    inversions++;
+                }
+            }
+        });
+        const row = Math.floor(puzzle.indexOf(0) / boardSize) + 1;
+        return (inversions + row) % 2 === 0;
+    };
 
     const [numbers, setNumbers] = useState(shuffle());
 
