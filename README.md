@@ -7,7 +7,7 @@ How to run:
 * Run client Node server in one terminal:
 ```
 cd client
-npm run dev
+yarn run dev
 ```
 * Then run the Flask server program in another terminal:
 ```

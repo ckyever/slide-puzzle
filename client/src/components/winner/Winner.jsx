@@ -1,16 +1,19 @@
-import NewGame from '../new-game/NewGame'
 import './Winner.css'
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const Winner = ({numbers}) => {
-    let message = "You solved it!";
+    let content = ""
 
-    if (!numbers.every(n => n.value === n.index + 1)) {
-        message = "";
+    if (numbers.every(n => n.value === n.index + 1)) {
+        content = (
+            <>
+                <p>You solved it!</p>
+                <ConfettiExplosion />
+            </>
+        );
     }
 
-    return <div className='winner'>
-        <p>{message}</p>
-    </div>
+    return <div className='winner'>{content}</div>
 }
 
 export default Winner
