@@ -1,15 +1,16 @@
 import NewGame from '../new-game/NewGame'
 import './Winner.css'
 
-const Winner = ({numbers, reset}) => {
-    if (!numbers.every(n => n.value === n.index + 1))
-        return null;
+const Winner = ({numbers}) => {
+    let message = "You solved it!";
 
-    return <div 
-        className='winner'>
-            <p>You solved it!</p>
-            <NewGame reset={reset}/>
-        </div>
+    if (!numbers.every(n => n.value === n.index + 1)) {
+        message = "";
+    }
+
+    return <div className='winner'>
+        <p>{message}</p>
+    </div>
 }
 
 export default Winner

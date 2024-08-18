@@ -89,13 +89,13 @@ const Board = () => {
     useEffect(reset, [])
 
     return <div className="game">
+        <Winner numbers={numbers}/>
         <div className="board">
             <Overlay numberOfTiles={numberOfTiles} />
             {numbers.map((x, i) =>
                 <Tile key={i} number={x} moveTile={moveTile} numberOfTiles={numberOfTiles}/>
             )}
         </div>
-        <Winner numbers={numbers} reset={reset}/>
         <NewGame reset={reset}/>
     </div>
 }
