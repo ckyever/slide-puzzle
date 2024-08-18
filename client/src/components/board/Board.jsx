@@ -8,42 +8,52 @@ import './Board.css';
 const Board = () => {
     const boardSize = 4; // Number of columns/rows
     const numberOfTiles = boardSize*boardSize; 
+    const emptyTileValue = numberOfTiles;
 
     const shuffle = () => {
-        let puzzle = Array(numberOfTiles)
+        let puzzle = null;
+
+        puzzle = Array(numberOfTiles)
             .fill()
             .map((_, i) => i + 1)
             .sort(() => Math.random() - 0.5)
             .map((x, i) => ({value: x, index: i}));
 
-        // If puzzle is not solvable we can assume (parity of permutations + taxicab distance of empty tile)
-        // is odd. So if we make one more swap this should bring the total to even
-        if (!isSolvable(puzzle)) {
-            const index1 = puzzle.indexOf(1);
-            const index2 = puzzle.indexOf(2);
-            [puzzle[index1], puzzle[index2]] = [puzzle[index2], puzzle[index1]];
+        // Always place empty tile in the bottom right corner
+        const emptyTileIndex = puzzle.findIndex(tile => tile.value === emptyTileValue);
+        puzzle[emptyTileIndex].value = puzzle[numberOfTiles-1].value;
+        puzzle[numberOfTiles-1].value = emptyTileValue;
+
+        // When empty tile is in the bottom row and board size is even the permutation parity
+        // must be even (see https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/)
+        if (getPermutationParity(puzzle) % 2 != 0) {
+            // In the case it is odd let us do one more inversion to make it even
+            const tempValue = puzzle[0].value;
+            puzzle[0].value = puzzle[1].value;
+            puzzle[1].value = tempValue;
         }
 
         return puzzle;
     };
 
-    const isSolvable = (puzzle) => {
+    const getPermutationParity = (puzzle) => {
         let inversions = 0;
-        puzzle.forEach((value, i) => {
-            for (let j = i + 1; j < numberOfTiles; j++) {
-                if (value > puzzle[j] && value !== 0 && puzzle[j] !== 0) {
-                    inversions++;
+        for (let i = 0; i < puzzle.length - 1; i++) {
+            for (let j = i + 1; j < puzzle.length; j++) {
+                if (puzzle[j].value != emptyTileValue && puzzle[i].value != emptyTileValue
+                    && puzzle[i].value > puzzle[j].value) {
+                        inversions++;
                 }
             }
-        });
-        const row = Math.floor(puzzle.indexOf(0) / boardSize) + 1;
-        return (inversions + row) % 2 === 0;
-    };
+        }
+
+        return inversions;
+    }
 
     const [numbers, setNumbers] = useState(shuffle());
 
     const moveTile = tile => {
-        const emptySpaceIndex = numbers.find(n => n.value === numberOfTiles).index;
+        const emptySpaceIndex = numbers.find(n => n.value === emptyTileValue).index;
 
         const emptySpaceRow = Math.floor(emptySpaceIndex / boardSize);
         const emptySpaceColumn = emptySpaceIndex % boardSize;
@@ -61,19 +71,18 @@ const Board = () => {
 
         const newNumbers = [...numbers].map(number => {
             if (number.index !== emptySpaceIndex && number.index !== tile.index) {
-                return number
-            } else if (number.value === numberOfTiles) {
-                return {value: numberOfTiles, index:tile.index}
+                return number;
+            } else if (number.value === emptyTileValue) {
+                return {value: emptyTileValue, index:tile.index};
             }
 
-            return {value: tile.value, index:emptySpaceIndex}
+            return {value: tile.value, index:emptySpaceIndex};
         });
 
         setNumbers(newNumbers);
     }
 
     const reset = () => {
-        console.log('Reset click');
         setNumbers(shuffle());
     }
 
