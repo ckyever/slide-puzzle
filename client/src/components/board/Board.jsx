@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import Overlay from '../overlay/Overlay';
 import Tile from '../tile/Tile';
 import Winner from '../winner/Winner';
-import NewGame from '../new-game/NewGame';
+import Action from '../action/Action';
 import './Board.css';
+import axios from 'axios';
 
 const Board = () => {
     const boardSize = 4; // Number of columns/rows
@@ -86,6 +87,19 @@ const Board = () => {
         setNumbers(shuffle());
     }
 
+    const solve = async () => {
+        console.log("CKYTODO Solve");
+        await axios.post("http://localhost:8080/api/puzzle", numbers)
+            .then(response => {
+                console.log(response.data.moves);
+            });
+        /* CKYTODO:
+            1. Send game state to server
+            2. Server solves and returns a list of moves
+            3. Puzzle will make the moves
+        */
+    }
+
     useEffect(reset, [])
 
     return <div className="game">
@@ -96,7 +110,10 @@ const Board = () => {
                 <Tile key={i} number={x} moveTile={moveTile} numberOfTiles={numberOfTiles}/>
             )}
         </div>
-        <NewGame reset={reset}/>
+        <div className="actions">
+            <Action action={reset} actionText="New Game"/>
+            <Action action={solve} actionText="Solve"/>
+        </div>
     </div>
 }
 

@@ -11,3 +11,11 @@
     overflow: hidden;
     border: 10px solid #ffffff;
 }
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
