@@ -11,6 +11,11 @@ const Board = () => {
     const numberOfTiles = boardSize*boardSize; 
     const emptyTileValue = numberOfTiles;
 
+    const slideUp = 'U';
+    const slideRight = 'R';
+    const slideDown = 'D';
+    const slideLeft = 'L';
+
     const shuffle = () => {
         let puzzle = null;
 
@@ -83,21 +88,41 @@ const Board = () => {
         setNumbers(newNumbers);
     }
 
+    const moveByDirection = direction => {
+        const emptyTileIndex = numbers.findIndex(tile => tile.value === emptyTileValue);
+        switch (direction) {
+            case slideUp:
+                moveTile(numbers[emptyTileIndex + boardSize]);
+                break;
+            case slideRight:
+                moveTile(numbers[emptyTileIndex - 1]);
+                break;
+            case slideDown:
+                moveTile(numbers[emptyTileIndex - boardSize]);
+                break;
+            case slideLeft:
+                moveTile(numbers[emptyTileIndex + 1]);
+                break;
+        }
+    };
+
     const reset = () => {
         setNumbers(shuffle());
     }
 
     const solve = async () => {
-        console.log("CKYTODO Solve");
-        await axios.post("http://localhost:8080/api/puzzle", numbers)
-            .then(response => {
-                console.log(response.data.moves);
-            });
-        /* CKYTODO:
-            1. Send game state to server
-            2. Server solves and returns a list of moves
-            3. Puzzle will make the moves
-        */
+        try {
+            const response = await axios.post("http://localhost:8080/api/puzzle", numbers);
+            const moves = response.data.moves;
+
+            for (let i=0; i < moves.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                // ckytodo: Board state is not refreshing correctly in between moves
+                moveByDirection(moves[i]);
+            }
+        } catch (error) {
+            console.error('Error solving puzzle:', error);
+        }
     }
 
     useEffect(reset, [])
