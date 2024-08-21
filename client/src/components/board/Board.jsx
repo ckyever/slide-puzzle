@@ -85,25 +85,35 @@ const Board = () => {
             return {value: tile.value, index:emptySpaceIndex};
         });
 
+        console.log(newNumbers);
         setNumbers(newNumbers);
     }
 
     const moveByDirection = direction => {
         const emptyTileIndex = numbers.findIndex(tile => tile.value === emptyTileValue);
+        let tileToMoveIndex = null;
         switch (direction) {
             case slideUp:
-                moveTile(numbers[emptyTileIndex + boardSize]);
+                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex + boardSize);
                 break;
             case slideRight:
-                moveTile(numbers[emptyTileIndex - 1]);
+                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex - 1);
                 break;
             case slideDown:
-                moveTile(numbers[emptyTileIndex - boardSize]);
+                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex - boardSize);
                 break;
             case slideLeft:
-                moveTile(numbers[emptyTileIndex + 1]);
+                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex + 1);
                 break;
         }
+        moveTile(numbers[tileToMoveIndex]);
+    };
+
+    const moveByDirectionAsync = async (direction) => {
+        return new Promise((resolve) => {
+            moveByDirection(direction);
+            setTimeout(resolve, 0); // Ensure the state has time to update
+        });
     };
 
     const reset = () => {
@@ -116,9 +126,9 @@ const Board = () => {
             const moves = response.data.moves;
 
             for (let i=0; i < moves.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, 1500));
                 // ckytodo: Board state is not refreshing correctly in between moves
-                moveByDirection(moves[i]);
+                await moveByDirectionAsync(moves[i]);
+                await new Promise(resolve => setTimeout(resolve, 1500));
             }
         } catch (error) {
             console.error('Error solving puzzle:', error);
