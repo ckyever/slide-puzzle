@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 import Action from '../action/Action';
 import Overlay from '../overlay/Overlay';
@@ -58,10 +58,10 @@ const Board = () => {
         return inversions;
     }
 
-    const [numbers, setNumbers] = useState(shuffle());
+    const [tileArray, setTileArray] = useState(shuffle());
 
     const moveTile = tile => {
-        const emptySpaceIndex = numbers.find(n => n.value === emptyTileValue).index;
+        const emptySpaceIndex = tileArray.find(n => n.value === emptyTileValue).index;
 
         const emptySpaceRow = Math.floor(emptySpaceIndex / boardSize);
         const emptySpaceColumn = emptySpaceIndex % boardSize;
@@ -77,7 +77,7 @@ const Board = () => {
             return;
         }
 
-        const newNumbers = [...numbers].map(number => {
+        const newTileArray = [...tileArray].map(number => {
             if (number.index !== emptySpaceIndex && number.index !== tile.index) {
                 return number;
             } else if (number.value === emptyTileValue) {
@@ -87,28 +87,27 @@ const Board = () => {
             return {value: tile.value, index:emptySpaceIndex};
         });
 
-        console.log(newNumbers);
-        setNumbers(newNumbers);
+        setTileArray(newTileArray);
     }
 
     const moveByDirection = direction => {
-        const emptyTileIndex = numbers.findIndex(tile => tile.value === emptyTileValue);
+        const emptyTileIndex = tileArray.findIndex(tile => tile.value === emptyTileValue);
         let tileToMoveIndex = null;
         switch (direction) {
             case slideUp:
-                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex + boardSize);
+                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex + boardSize);
                 break;
             case slideRight:
-                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex - 1);
+                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex - 1);
                 break;
             case slideDown:
-                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex - boardSize);
+                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex - boardSize);
                 break;
             case slideLeft:
-                tileToMoveIndex = numbers.findIndex(tile => tile.index === emptyTileIndex + 1);
+                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex + 1);
                 break;
         }
-        moveTile(numbers[tileToMoveIndex]);
+        moveTile(tileArray[tileToMoveIndex]);
     };
 
     const moveByDirectionAsync = async (direction) => {
@@ -119,12 +118,12 @@ const Board = () => {
     };
 
     const reset = () => {
-        setNumbers(shuffle());
+        setTileArray(shuffle());
     }
 
     const solve = async () => {
         try {
-            const response = await axios.post("http://localhost:8080/api/puzzle", numbers);
+            const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
             const moves = response.data.moves;
 
             for (let i=0; i < moves.length; i++) {
@@ -140,10 +139,10 @@ const Board = () => {
     useEffect(reset, [])
 
     return <div className="game">
-        <Winner numbers={numbers}/>
+        <Winner tileArray={tileArray}/>
         <div className="board">
             <Overlay numberOfTiles={numberOfTiles} />
-            {numbers.map((x, i) =>
+            {tileArray.map((x, i) =>
                 <Tile key={i} number={x} moveTile={moveTile} numberOfTiles={numberOfTiles}/>
             )}
         </div>

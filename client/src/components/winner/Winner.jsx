@@ -1,10 +1,10 @@
 import './Winner.css'
 import ConfettiExplosion from 'react-confetti-explosion';
 
-const Winner = ({numbers}) => {
+const Winner = ({tileArray}) => {
     let content = ""
 
-    if (numbers.every(n => n.value === n.index + 1)) {
+    if (tileArray.every(n => n.value === n.index + 1)) {
         content = (
             <>
                 <p>You solved it!</p>
