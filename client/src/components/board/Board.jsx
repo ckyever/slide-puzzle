@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import Action from '../action/Action';
 import Overlay from '../overlay/Overlay';
 import Tile from '../tile/Tile';
 import Winner from '../winner/Winner';
-import Action from '../action/Action';
+
 import './Board.css';
-import axios from 'axios';
 
 const Board = () => {
     const boardSize = 4; // Number of columns/rows
