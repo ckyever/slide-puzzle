@@ -113,7 +113,7 @@ const Board = () => {
     const moveByDirectionAsync = async (direction) => {
         return new Promise((resolve) => {
             moveByDirection(direction);
-            setTimeout(resolve, 0); // Ensure the state has time to update
+            setTimeout(resolve, 1500);
         });
     };
 
@@ -129,7 +129,6 @@ const Board = () => {
             for (let i=0; i < moves.length; i++) {
                 // ckytodo: Board state is not refreshing correctly in between moves
                 await moveByDirectionAsync(moves[i]);
-                await new Promise(resolve => setTimeout(resolve, 1500));
             }
         } catch (error) {
             console.error('Error solving puzzle:', error);
