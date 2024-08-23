@@ -59,6 +59,7 @@ const Board = () => {
     };
 
     const [tileArray, setTileArray] = useState(createNewPuzzle());
+    const [moves, setMoves] = useState([]);
 
     const moveTile = tile => {
         const emptySpaceIndex = tileArray.find(n => n.value === emptyTileValue).index;
@@ -110,32 +111,34 @@ const Board = () => {
         moveTile(tileArray[tileToMoveIndex]);
     };
 
-    const moveByDirectionAsync = async (direction) => {
-        return new Promise((resolve) => {
-            moveByDirection(direction);
-            setTimeout(resolve, 1500);
-        });
+    const animateMoves = async () => {
+        for (let move of moves) {
+            // CKYTODO: tileArray is not being refreshed in between moves
+            moveByDirection(move);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+    };
+
+    const solve = async () => {
+        try {
+            const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
+            setMoves(response.data.moves);
+        } catch (error) {
+            console.error('Error receiving moves to solve puzzle:', error);
+        }
     };
 
     const reset = () => {
         setTileArray(createNewPuzzle());
     };
 
-    const solve = async () => {
-        try {
-            const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
-            const moves = response.data.moves;
-
-            for (let i=0; i < moves.length; i++) {
-                // ckytodo: Board state is not refreshing correctly in between moves
-                await moveByDirectionAsync(moves[i]);
-            }
-        } catch (error) {
-            console.error('Error solving puzzle:', error);
-        }
-    };
-
     useEffect(reset, []);
+
+    useEffect(() => {
+        if (moves.length > 0) {
+            animateMoves();
+        }
+    }, [moves]);
 
     return <div className="game">
         <Winner tileArray={tileArray}/>
