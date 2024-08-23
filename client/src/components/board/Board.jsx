@@ -18,7 +18,7 @@ const Board = () => {
     const slideDown = 'D';
     const slideLeft = 'L';
 
-    const shuffle = () => {
+    const createNewPuzzle = () => {
         let puzzle = null;
 
         puzzle = Array(numberOfTiles)
@@ -56,9 +56,9 @@ const Board = () => {
         }
 
         return inversions;
-    }
+    };
 
-    const [tileArray, setTileArray] = useState(shuffle());
+    const [tileArray, setTileArray] = useState(createNewPuzzle());
 
     const moveTile = tile => {
         const emptySpaceIndex = tileArray.find(n => n.value === emptyTileValue).index;
@@ -88,7 +88,7 @@ const Board = () => {
         });
 
         setTileArray(newTileArray);
-    }
+    };
 
     const moveByDirection = direction => {
         const emptyTileIndex = tileArray.findIndex(tile => tile.value === emptyTileValue);
@@ -118,8 +118,8 @@ const Board = () => {
     };
 
     const reset = () => {
-        setTileArray(shuffle());
-    }
+        setTileArray(createNewPuzzle());
+    };
 
     const solve = async () => {
         try {
@@ -133,9 +133,9 @@ const Board = () => {
         } catch (error) {
             console.error('Error solving puzzle:', error);
         }
-    }
+    };
 
-    useEffect(reset, [])
+    useEffect(reset, []);
 
     return <div className="game">
         <Winner tileArray={tileArray}/>
@@ -150,6 +150,6 @@ const Board = () => {
             <Action action={solve} actionText="Solve"/>
         </div>
     </div>
-}
+};
 
 export default Board
