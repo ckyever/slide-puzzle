@@ -119,13 +119,17 @@ const Board = () => {
         }
     }
 
-    const solve = async () => {
-        try {
-            const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
-            setMoves(response.data.moves);
-        } catch (error) {
-            console.error('Error receiving moves to solve puzzle:', error);
-        }
+    const solve = () => {
+    //    try {
+    //        const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
+    //        setMoves(response.data.moves);
+    //    } catch (error) {
+    //        console.error('Error receiving moves to solve puzzle:', error);
+    //    }
+        console.log('moving right once');
+        moveByDirection(slideRight);
+        console.log('moving right twice');
+        moveByDirection(slideRight);
     }
 
     const reset = () => {
@@ -144,8 +148,8 @@ const Board = () => {
         <Winner tileArray={tileArray}/>
         <div className="board">
             <Overlay numberOfTiles={numberOfTiles} />
-            {tileArray.map((x, i) =>
-                <Tile key={i} number={x} moveTile={moveTile} numberOfTiles={numberOfTiles}/>
+            {tileArray.map((tile, index) =>
+                <Tile key={index} number={tile} moveTile={moveTile} numberOfTiles={numberOfTiles}/>
             )}
         </div>
         <div className="actions">
