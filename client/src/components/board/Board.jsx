@@ -42,7 +42,7 @@ const Board = () => {
         }
 
         return puzzle;
-    };
+    }
 
     const getPermutationParity = (puzzle) => {
         let inversions = 0;
@@ -56,7 +56,7 @@ const Board = () => {
         }
 
         return inversions;
-    };
+    }
 
     const [tileArray, setTileArray] = useState(createNewPuzzle());
     const [moves, setMoves] = useState([]);
@@ -82,14 +82,14 @@ const Board = () => {
             if (number.index !== emptySpaceIndex && number.index !== tile.index) {
                 return number;
             } else if (number.value === emptyTileValue) {
-                return {value: emptyTileValue, index:tile.index};
+                return {value: emptyTileValue, index:tile.index}
             }
 
-            return {value: tile.value, index:emptySpaceIndex};
+            return {value: tile.value, index:emptySpaceIndex}
         });
 
         setTileArray(newTileArray);
-    };
+    }
 
     const moveByDirection = direction => {
         const emptyTileIndex = tileArray.findIndex(tile => tile.value === emptyTileValue);
@@ -109,7 +109,7 @@ const Board = () => {
                 break;
         }
         moveTile(tileArray[tileToMoveIndex]);
-    };
+    }
 
     const animateMoves = async () => {
         for (let move of moves) {
@@ -117,7 +117,7 @@ const Board = () => {
             moveByDirection(move);
             await new Promise((resolve) => setTimeout(resolve, 1000));
         }
-    };
+    }
 
     const solve = async () => {
         try {
@@ -126,11 +126,11 @@ const Board = () => {
         } catch (error) {
             console.error('Error receiving moves to solve puzzle:', error);
         }
-    };
+    }
 
     const reset = () => {
         setTileArray(createNewPuzzle());
-    };
+    }
 
     useEffect(reset, []);
 
@@ -153,6 +153,6 @@ const Board = () => {
             <Action action={solve} actionText="Solve"/>
         </div>
     </div>
-};
+}
 
 export default Board
