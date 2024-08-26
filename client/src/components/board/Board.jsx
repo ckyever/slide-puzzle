@@ -91,45 +91,56 @@ const Board = () => {
         setTileArray(newTileArray);
     }
 
-    const moveByDirection = direction => {
-        const emptyTileIndex = tileArray.findIndex(tile => tile.value === emptyTileValue);
-        let tileToMoveIndex = null;
-        switch (direction) {
-            case slideUp:
-                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex + boardSize);
-                break;
-            case slideRight:
-                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex - 1);
-                break;
-            case slideDown:
-                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex - boardSize);
-                break;
-            case slideLeft:
-                tileToMoveIndex = tileArray.findIndex(tile => tile.index === emptyTileIndex + 1);
-                break;
-        }
-        moveTile(tileArray[tileToMoveIndex]);
-    }
-
     const animateMoves = async () => {
         for (let move of moves) {
-            // CKYTODO: tileArray is not being refreshed in between moves
-            moveByDirection(move);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-        }
-    }
+            await new Promise(resolve => {
+                setTileArray(prevTileArray => {
+                    const emptyTileIndex = prevTileArray.findIndex(tile => tile.value === emptyTileValue);
+                    let tileToMoveIndex = null;
 
-    const solve = () => {
-    //    try {
-    //        const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
-    //        setMoves(response.data.moves);
-    //    } catch (error) {
-    //        console.error('Error receiving moves to solve puzzle:', error);
-    //    }
-        console.log('moving right once');
-        moveByDirection(slideRight);
-        console.log('moving right twice');
-        moveByDirection(slideRight);
+                    switch (move) {
+                        case slideUp:
+                            tileToMoveIndex = prevTileArray.findIndex(tile => tile.index === emptyTileIndex + boardSize);
+                            break;
+                        case slideRight:
+                            tileToMoveIndex = prevTileArray.findIndex(tile => tile.index === emptyTileIndex - 1);
+                            break;
+                        case slideDown:
+                            tileToMoveIndex = prevTileArray.findIndex(tile => tile.index === emptyTileIndex - boardSize);
+                            break;
+                        case slideLeft:
+                            tileToMoveIndex = prevTileArray.findIndex(tile => tile.index === emptyTileIndex + 1);
+                            break;
+                    }
+
+                    if (tileToMoveIndex === null) {
+                        resolve();
+                        return prevTileArray;
+                    }
+
+                    const newTileArray = [...prevTileArray];
+
+                    const tileToMove = newTileArray[tileToMoveIndex];
+                    newTileArray[emptyTileIndex] = { ...tileToMove, index: emptyTileIndex };
+                    newTileArray[tileToMoveIndex] = { value: emptyTileValue, index: tileToMove.index };
+
+                    resolve();
+                    return newTileArray;
+                });
+            });
+
+            await new Promise((resolve) => setTimeout(resolve, 500)); // Wait before the next move
+        }
+        setMoves([]);
+    };
+
+    const solve = async () => {
+        try {
+            const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
+            setMoves(response.data.moves);
+        } catch (error) {
+            console.error('Error receiving moves to solve puzzle:', error);
+        }
     }
 
     const reset = () => {

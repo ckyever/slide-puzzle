@@ -9,7 +9,7 @@ cors = CORS(app, origins='*')
 def receivePuzzle():
     numbers = request.json
     print(numbers)
-    moves = [slidepuzzle.Board.SLIDE_DOWN, slidepuzzle.Board.SLIDE_RIGHT]
+    moves = [slidepuzzle.Board.SLIDE_DOWN, slidepuzzle.Board.SLIDE_RIGHT, slidepuzzle.Board.SLIDE_UP, slidepuzzle.Board.SLIDE_LEFT]
 
     return jsonify(
         {
