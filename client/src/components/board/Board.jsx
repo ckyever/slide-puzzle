@@ -122,7 +122,7 @@ const Board = () => {
 
                     const tileToMove = newTileArray[tileToMoveIndex];
                     newTileArray[emptyTileIndex] = { ...tileToMove, index: emptyTileIndex };
-                    newTileArray[tileToMoveIndex] = { value: emptyTileValue, index: tileToMove.index };
+                    newTileArray[tileToMoveIndex] = { value: emptyTileValue, index: tileToMoveIndex };
 
                     resolve();
                     return newTileArray;
@@ -134,6 +134,8 @@ const Board = () => {
         setMoves([]);
     };
 
+    // CKYTODO: This doesn't work if you first move the board around manually then click the solve button. It seems to be using the 
+    // empty tile index of the initial board state instead of the current one
     const solve = async () => {
         try {
             const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
