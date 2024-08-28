@@ -93,9 +93,11 @@ const Board = () => {
 
     const animateMoves = async () => {
         for (let move of moves) {
+            console.log(move);
             await new Promise(resolve => {
                 setTileArray(prevTileArray => {
                     const emptyTileIndex = prevTileArray.findIndex(tile => tile.value === emptyTileValue);
+                    console.log(prevTileArray);
                     let tileToMoveIndex = null;
 
                     switch (move) {

@@ -8,7 +8,7 @@ const Winner = ({tileArray}) => {
         content = (
             <>
                 <p>You solved it!</p>
-                <ConfettiExplosion />
+                <ConfettiExplosion duration={2500} width={2000} force={0.6}/>
             </>
         );
     }
