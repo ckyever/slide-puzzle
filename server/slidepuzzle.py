@@ -28,6 +28,9 @@ class Board:
     def getBoard(self):
         return self.board
 
+    def setBoard(self, boardArray):
+        self.board = boardArray
+
     def getMoveHistory(self):
         return self.moveHistory
 
