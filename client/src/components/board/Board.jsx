@@ -93,13 +93,14 @@ const Board = () => {
 
     const animateMoves = async () => {
         for (let move of moves) {
-            console.log(move);
-            await new Promise(resolve => {
-                setTileArray(prevTileArray => {
-                    const emptyTileIndex = prevTileArray.findIndex(tile => tile.value === emptyTileValue);
-                    console.log(prevTileArray);
-                    let tileToMoveIndex = null;
+            console.log('Current move:', move);
 
+            await new Promise((resolve) => {
+                setTileArray((prevTileArray) => {
+                    const emptyTileIndex = prevTileArray.findIndex(tile => tile.value === emptyTileValue);
+                    console.log('Empty tile index:', emptyTileIndex);
+
+                    let tileToMoveIndex = null;
                     switch (move) {
                         case slideUp:
                             tileToMoveIndex = prevTileArray.findIndex(tile => tile.index === emptyTileIndex + boardSize);
@@ -121,7 +122,6 @@ const Board = () => {
                     }
 
                     const newTileArray = [...prevTileArray];
-
                     const tileToMove = newTileArray[tileToMoveIndex];
                     newTileArray[emptyTileIndex] = { ...tileToMove, index: emptyTileIndex };
                     newTileArray[tileToMoveIndex] = { value: emptyTileValue, index: tileToMoveIndex };
@@ -131,8 +131,9 @@ const Board = () => {
                 });
             });
 
-            await new Promise((resolve) => setTimeout(resolve, 500)); // Wait before the next move
+            await new Promise((resolve) => setTimeout(resolve, 1000)); 
         }
+
         setMoves([]);
     };
 
