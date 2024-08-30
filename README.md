@@ -1,23 +1,8 @@
-# Slide puzzle
+# React + Vite
 
-React application that allows the user to solve a 15 puzzle. 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Future plans involve finishing a Python server that can receive board states and provide the
-front-end a set of moves to solve it. The goal is to train a neural network model with
-reinforcement learning so it can solve the puzzle.
+Currently, two official plugins are available:
 
-Currently a representation of the board along with some utility functions have been written in
-Python and the puzzle can be played and solved via the CLI.
-
-How to run:
-
-* Run client Node server in one terminal:
-```
-cd client
-yarn run dev
-```
-* Then run the Flask server program in another terminal:
-```
-cd server
-python3 main.py
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
