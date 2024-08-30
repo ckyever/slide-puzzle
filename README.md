@@ -1,6 +1,13 @@
 # Slide puzzle
 
-React application that generates a slide puzzle of a choosen width. It can either be solved by the user or by a slide puzzle AI.
+React application that allows the user to solve a 15 puzzle. 
+
+Future plans involve finishing a Python server that can receive board states and provide the
+front-end a set of moves to solve it. The goal is to train a neural network model with
+reinforcement learning so it can solve the puzzle.
+
+Currently a representation of the board along with some utility functions have been written in
+Python and the puzzle can be played and solved via the CLI.
 
 How to run:
 

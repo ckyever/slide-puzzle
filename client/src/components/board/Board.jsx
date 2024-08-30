@@ -97,6 +97,10 @@ const Board = () => {
 
             await new Promise((resolve) => {
                 setTileArray((prevTileArray) => {
+
+                    // TODO: This doesn't work if you first move the board around manually then
+                    // click the solve button. It seems to be using the empty tile index of the
+                    // initial board state instead of the current one
                     const emptyTileIndex = prevTileArray.findIndex(tile => tile.value === emptyTileValue);
                     console.log('Empty tile index:', emptyTileIndex);
 
@@ -137,8 +141,6 @@ const Board = () => {
         setMoves([]);
     };
 
-    // CKYTODO: This doesn't work if you first move the board around manually then click the solve button. It seems to be using the 
-    // empty tile index of the initial board state instead of the current one
     const solve = async () => {
         try {
             const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
@@ -170,7 +172,7 @@ const Board = () => {
         </div>
         <div className="actions">
             <Action action={reset} actionText="New Game"/>
-            <Action action={solve} actionText="Solve"/>
+            {/*TODO: Remove solve button until python program is finished <Action action={solve} actionText="Solve"/>*/}
         </div>
     </div>
 }
