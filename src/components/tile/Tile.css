@@ -10,7 +10,7 @@
     font-size: 50px;
     color: white;
     cursor: pointer;
-    transition: left .4s, top .4s;
+    transition: left .2s, top .2s;
     user-select: none;
     border: 0.1rem solid #ffffff;
 }
