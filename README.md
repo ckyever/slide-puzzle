@@ -11,8 +11,10 @@ Python and the puzzle can be played and solved via the CLI.
 
 How to run locally:
 
+* Ensure node, yarn and vite are installed on your machine
 * Run client Node server in one terminal:
 ```
+cd client
 yarn run dev
 ```
 * Then run the Flask server program in another terminal:
