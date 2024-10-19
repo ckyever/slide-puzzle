@@ -162,6 +162,49 @@ const Board = () => {
         }
     }, [moves]);
 
+    useEffect(() => {
+        function handleKeyDown(e) {
+            const emptySpaceIndex = tileArray.find(n => n.value === emptyTileValue).index;
+            let tileToMoveIndex = null;
+
+            switch (e.key) {
+                case "ArrowLeft":
+                    tileToMoveIndex = tileArray.findIndex(n => n.index === (emptySpaceIndex + 1));
+                    if (tileToMoveIndex >= 0 && tileToMoveIndex <= (numberOfTiles - 1)) {
+                        moveTile(tileArray[tileToMoveIndex]);
+                    }
+                    break;
+
+                case "ArrowUp":
+                    tileToMoveIndex = tileArray.findIndex(n => n.index === (emptySpaceIndex + boardSize));
+                    if (tileToMoveIndex >= 0 && tileToMoveIndex <= (numberOfTiles - 1)) {
+                        moveTile(tileArray[tileToMoveIndex]);
+                    }
+                    break;
+
+                case "ArrowRight":
+                    tileToMoveIndex = tileArray.findIndex(n => n.index === (emptySpaceIndex - 1));
+                    if (tileToMoveIndex >= 0 && tileToMoveIndex <= (numberOfTiles - 1)) {
+                        moveTile(tileArray[tileToMoveIndex]);
+                    }
+                    break;
+
+                case "ArrowDown":
+                    tileToMoveIndex = tileArray.findIndex(n => n.index === (emptySpaceIndex - boardSize));
+                    if (tileToMoveIndex >= 0 && tileToMoveIndex <= (numberOfTiles - 1)) {
+                        moveTile(tileArray[tileToMoveIndex]);
+                    }
+                    break;
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return function cleanup() {
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+    })
+
     return <div className="game">
         <Winner tileArray={tileArray}/>
         <div className="board">
