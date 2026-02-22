@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import Action from '../action/Action';
@@ -141,26 +140,17 @@ const Board = () => {
         setMoves([]);
     };
 
-    const solve = async () => {
-        try {
-            const response = await axios.post("http://localhost:8080/api/puzzle", tileArray);
-            setMoves(response.data.moves);
-        } catch (error) {
-            console.error('Error receiving moves to solve puzzle:', error);
-        }
-    }
-
     const reset = () => {
         setTileArray(createNewPuzzle());
     }
 
-    useEffect(reset, []);
+    useEffect(reset, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (moves.length > 0) {
             animateMoves();
         }
-    }, [moves]);
+    }, [moves]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         function handleKeyDown(e) {
